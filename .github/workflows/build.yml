@@ -18,14 +18,9 @@ jobs:
           submodules: recursive
       - name: Build
         run: |
-          ls $GITHUB_WORKSPACE/ -al
-          ls $GITHUB_WORKSPACE/lib/ -al
-          ls $GITHUB_WORKSPACE/lib/bls-signatures/ -al
           sudo apt install  -y libsodium-dev  libgmp3-dev
           cmake --no-warn-unused-cli -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_C_COMPILER:FILEPATH=/usr/bin/gcc-9 -DCMAKE_CXX_COMPILER:FILEPATH=/usr/bin/g++-9 -DCMAKE_SYSTEM_NAME:STRING=Linux -H$GITHUB_WORKSPACE -B$GITHUB_WORKSPACE/build -G "Unix Makefiles"
           cmake --build $GITHUB_WORKSPACE/build --config Release --target chia_plot -- -j 6
-          ls $GITHUB_WORKSPACE/build/ -al
-          ls $GITHUB_WORKSPACE/build/bin/ -al
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -43,6 +38,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: $GITHUB_WORKSPACE/build/bin/chia-plot
+          asset_path: $GITHUB_WORKSPACE/build/chia-plot
           asset_name: chia-plot
           asset_content_type: application/excutable
