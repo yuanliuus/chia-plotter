@@ -21,6 +21,7 @@ jobs:
           sudo apt install  -y libsodium-dev  libgmp3-dev
           cmake --no-warn-unused-cli -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_C_COMPILER:FILEPATH=/usr/bin/gcc-9 -DCMAKE_CXX_COMPILER:FILEPATH=/usr/bin/g++-9 -DCMAKE_SYSTEM_NAME:STRING=Linux -H$GITHUB_WORKSPACE -B$GITHUB_WORKSPACE/build -G "Unix Makefiles"
           cmake --build $GITHUB_WORKSPACE/build --config Release --target chia_plot -- -j 6
+          ls $GITHUB_WORKSPACE/build/ -al
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
